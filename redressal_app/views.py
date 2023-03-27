@@ -7,8 +7,17 @@ from django.http import HttpResponse, JsonResponse
 
 # Create your views here.
 
-def navbar_home(request):
-    return render (request, 'navbar_home.html')
+def navbar_unauthenticated(request):
+    return render (request, 'navbar_unauthenticated.html')
 
-def login(request):
-    return render (request, 'login.html')
+def login_admin(request):
+    return render (request, 'login_admin.html')
+
+def login_faculty(request):
+    return render (request, 'login_faculty.html')
+
+def login_proctor(request):
+    return render (request, 'login_proctor.html')
+
+def login_student(request):
+    return render (request, 'login_student.html')
