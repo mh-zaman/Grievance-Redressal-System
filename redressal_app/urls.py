@@ -4,4 +4,5 @@ from redressal_app import views
 urlpatterns = [
     #path('', views.home, name="index"),
     path('', views.navbar_home, name="navbar_home"),
+    path('login', views.login, name="login"),
 ]
