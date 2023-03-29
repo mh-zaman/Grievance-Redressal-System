@@ -1,0 +1,68 @@
+<!Doctype html>
+{% extends 'navbar_unauthenticated.html' %}
+
+{% block title %} Faculty Registration {% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block body %}
+
+<div class="pt-5">
+    <h1 class="text-center">Welcome </h1>
+    <h3 class="text-center">Please enter your details</h3>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 mx-auto">
+                <div class="card card-body">
+
+                    <form id="submitForm" action="/login" method="post" data-parsley-validate=""
+                        data-parsley-errors-messages-disabled="true" novalidate="" _lpchecked="1"><input type="hidden"
+                            name="_csrf" value="7635eb83-1f95-4b32-8788-abec2724a9a4">
+
+                        <div class="form-group required">
+                            <lsabel for="user_name">Name</lsabel>
+                            <input type="text" class="form-control " id="username" required="" name="username" value=""
+                                placeholder=" Enter your Name">
+                        </div>
+                        <div class="form-group required">
+                            <lsabel for="user_mail">Email</lsabel>
+                            <input type="text" class="form-control " id="user_mail" required="" name="user_mail"
+                                value="" placeholder="Enter your Email">
+                        </div>
+                        <div class="form-group required">
+                            <lsabel for="user_dept">Depertment</lsabel>
+                            <input type="text" class="form-control" required="" id="user_dept" name="user_dept" value=""
+                                placeholder="Enter your Depertment">
+                        </div>
+                        
+                        <div class="form-group required">
+                            <lsabel for="user_pass">Password</lsabel>
+                            <input type="password" class="form-control" required="" id="user_pass" name="user_pass"
+                                value="" placeholder="Enter your Password">
+                        </div>
+                        <div class="form-group required">
+                            <lsabel for="user_repass">Re-Password</lsabel>
+                            <input type="password" class="form-control" required="" id="user_repass" name="user_repass"
+                                value="" placeholder="Enter your Re-Password">
+                        </div>
+
+                        <div class="form-group mt-4 mb-4">
+
+                        </div>
+                        <div class="form-group pt-1 text-center">
+                            <button class="btn btn-primary btn-block" type="submit">Sign In</button>
+                        </div>
+                    </form>
+                    <p class="small-xl pt-3 text-center">
+                        <span class="text-muted">Already have an account?</span>
+                        <a href="#">Log In</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
