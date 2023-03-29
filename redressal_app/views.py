@@ -21,3 +21,6 @@ def login_proctor(request):
 
 def login_student(request):
     return render (request, 'login_student.html')
+
+def registration(request):
+    return render (request, 'registration.html')
