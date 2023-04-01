@@ -4,139 +4,141 @@
 {% block title %} Complaint Details {% endblock %}
 
 {% block css %}
+<style>
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-  }
-
-  header {
-    background-color: white;
-    color: #fff;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-  }
-
-
-
-  main {
-    padding: 20px;
-  }
-
-  .container {
-    max-width: 600px;
-    
-  }
-
-  form label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 10px;
-    
-  }
-
-  form input[type="text"] {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 50%;
-    margin-bottom: 20px;
-    background-color: rgb(224, 221, 221);
-  }
-  form textarea {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-    margin-bottom: 20px;
-    margin-top: 10px;
-    background-color: rgb(224, 221, 221);
-  }
-
-  form textarea {
-    height: 150px;
-  }
-  .buttons{
-    display: flex;
-    justify-content: flex-end;
+margin: 0;
+padding: 0;
+font-family: Arial, sans-serif;
 }
 
-  #button1{
-    background-color: #fdfeff;
-    color: #14b42a;
-    padding: 10px 20px;
-    border: none;
-    text-align: center;
-    font-weight: bold;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 4px;
-  }
-  #button2{
-    background-color: #fdfeff;
-    color: #5030df;
-    padding: 10px 20px;
-    border: none;
-    text-align: center;
-    font-weight: bold;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 4px;
-  }
-  #button3{
-    background-color: #fdfeff;
-    color: #da2121;
-    padding: 10px 20px;
-    border: none;
-    text-align: center;
-    font-weight: bold;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 4px;
-  }
+header {
+background-color: white;
+color: #fff;
+padding: 20px;
+display: flex;
+align-items: center;
+}
 
-  #button1:hover{
-    background-color: rgb(216, 216, 226);
-  }
-  #button2:hover{
-    background-color:  rgb(216, 216, 226);
-  }
-  #button3:hover{
-    background-color:  rgb(216, 216, 226);
-  }
+
+
+main {
+padding: 20px;
+}
+
+.container {
+max-width: 600px;
+
+}
+
+form label {
+display: block;
+font-weight: bold;
+margin-bottom: 10px;
+
+}
+
+form input[type="text"] {
+padding: 10px;
+font-size: 16px;
+border: 1px solid #ccc;
+border-radius: 5px;
+width: 50%;
+margin-bottom: 20px;
+background-color: rgb(224, 221, 221);
+}
+form textarea {
+padding: 10px;
+font-size: 16px;
+border: 1px solid #ccc;
+border-radius: 5px;
+width: 100%;
+margin-bottom: 20px;
+margin-top: 10px;
+background-color: rgb(224, 221, 221);
+}
+
+form textarea {
+height: 150px;
+}
+.buttons{
+display: flex;
+justify-content: flex-end;
+}
+
+#button1{
+background-color: #fdfeff;
+color: #14b42a;
+padding: 10px 20px;
+border: none;
+text-align: center;
+font-weight: bold;
+border-radius: 5px;
+font-size: 16px;
+cursor: pointer;
+margin: 4px;
+}
+#button2{
+background-color: #fdfeff;
+color: #5030df;
+padding: 10px 20px;
+border: none;
+text-align: center;
+font-weight: bold;
+border-radius: 5px;
+font-size: 16px;
+cursor: pointer;
+margin: 4px;
+}
+#button3{
+background-color: #fdfeff;
+color: #da2121;
+padding: 10px 20px;
+border: none;
+text-align: center;
+font-weight: bold;
+border-radius: 5px;
+font-size: 16px;
+cursor: pointer;
+margin: 4px;
+}
+
+#button1:hover{
+background-color: rgb(216, 216, 226);
+}
+#button2:hover{
+background-color: rgb(216, 216, 226);
+}
+#button3:hover{
+background-color: rgb(216, 216, 226);
+}
+</style>
 
 {% endblock %}
 
 {% block body %}
 <main>
-    <div class="container">
-      <form>
-       <label for="name">Name:</label>
-       <input type="text" id="name" name="name"> <br>
+  <div class="container">
+    <form>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name"> <br>
 
-       <label for="id">ID:</label>
-       <input type="text" id="id" name="id"> <br>
+      <label for="id">ID:</label>
+      <input type="text" id="id" name="id"> <br>
 
-       <label for="subject">Subject:</label>
-       <input type="text" id="subject" name="subject"> <br>
-        
-       <label for="complaint">Complaint:</label>
-       <textarea id="complaint" name="complaint" rows="5" cols="30"></textarea> <br>
-       
-       <div class="buttons">
-          <button type="submit" id="button1">Raise</button>
-          <button type="submit" id="button2">Resolve</button>
-          <button type="submit" id="button3">Delete</button>
-        </div>  
-        
-      </form>
-    </div>
-  </main>
+      <label for="subject">Subject:</label>
+      <input type="text" id="subject" name="subject"> <br>
+
+      <label for="complaint">Complaint:</label>
+      <textarea id="complaint" name="complaint" rows="5" cols="30"></textarea> <br>
+
+      <div class="buttons">
+        <button type="submit" id="button1">Raise</button>
+        <button type="submit" id="button2">Resolve</button>
+        <button type="submit" id="button3">Delete</button>
+      </div>
+
+    </form>
+  </div>
+</main>
 
 {% endblock %}
