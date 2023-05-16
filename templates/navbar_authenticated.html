@@ -47,33 +47,25 @@
                         </li>
                         &emsp;&emsp;&emsp;&emsp;
                         <li class="nav-item">
-                            <a class="nav-link" href="/dashboard_student/">About</a>
+                            <a class="nav-link" href="#">About</a>
                         </li>
-                        &emsp;&emsp;&emsp;&emsp;
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Login
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/login_admin/">Admin</a></li>
-                                <li><a class="dropdown-item" href="/login_faculty/">Faculty</a></li>
-                                <li><a class="dropdown-item" href="/login_proctor/">Proctor</a></li>
-                                <li><a class="dropdown-item" href="/login_student/">Student</a></li>
-                            </ul>
-                        </li>
-                        &emsp;&emsp;&emsp;&emsp;
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Registration
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/registration_student/">Student</a></li>
-                                <li><a class="dropdown-item" href="/registration_faculty/">Faculty</a></li>
-                            </ul>
-                        </li>
+
+
                     </ul>
+
+                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+                    <a style="font-weight:600; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: large;"
+                        class="nav-link active" href="/student_profile/">{{student.student_name}}</a>
+
+                    {% if student.student_image %}
+                    <img src="{{student.student_image.url}}" alt="{{student.student_name}}"
+                        style="border: 1px solid #0b5ed7; object-fit: cover; width: 45px; height: 45px; padding: 0.05em; border-radius: 50%; align-items: center;">
+                    {% else %}
+                    <img src="{% static 'default_dp.gif' %}" alt="{{student.student_name}}"
+                        style="border: 1px solid #0b5ed7; object-fit: cover; width: 45px; height: 45px; padding: 0.05em; border-radius: 50%; align-items: center;">
+                    {% endif %}
 
                 </div>
             </div>

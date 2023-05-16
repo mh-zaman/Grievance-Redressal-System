@@ -17,39 +17,51 @@
             <div class="col-md-5 mx-auto">
                 <div class="card card-body">
 
-                    <form id="submitForm" action="/login" method="post" data-parsley-validate=""
-                        data-parsley-errors-messages-disabled="true" novalidate="" _lpchecked="1"><input type="hidden"
-                            name="_csrf" value="7635eb83-1f95-4b32-8788-abec2724a9a4">
-
+                    <form method="POST" data-parsley-validate="" data-parsley-errors-messages-disabled="true"><input
+                            type="hidden" name="_csrf" value="">
+                        {% csrf_token %}
+                        {% if messages %}
+                        {% for result in messages %}
+                        {% if result.tags == "error" %}
+                        <div class="alert alert-danger" style="color: red;">
+                            {{ result }}
+                        </div>
+                        {% else %}
+                        <div class="alert alert-success" style="color: green;">
+                            {{ result }}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
                         <div class="form-group required">
-                            <lsabel for="user_name">Name</lsabel>
-                            <input type="text" class="form-control " id="username" required="" name="username" value=""
-                                placeholder=" Enter your Name">
+                            <lsabel for="student_name">Name</lsabel>
+                            <input type="text" class="form-control " id="student_name" required="" name="student_name"
+                                value="" placeholder=" Enter your Name">
                         </div>
                         <div class="form-group required">
-                            <lsabel for="user_mail">Email</lsabel>
-                            <input type="text" class="form-control " id="user_mail" required="" name="user_mail"
+                            <lsabel for="student_email">Email</lsabel>
+                            <input type="text" class="form-control " id="student_email" required="" name="student_email"
                                 value="" placeholder="Enter your Email">
                         </div>
                         <div class="form-group required">
-                            <lsabel for="user_id">ID</lsabel>
-                            <input type="text" class="form-control " id="user_id" required="" name="user_id" value=""
-                                placeholder="Enter your ID">
+                            <lsabel for="student_id">ID</lsabel>
+                            <input type="text" class="form-control " id="student_id" required="" name="student_id"
+                                value="" placeholder="Enter your ID">
                         </div>
                         <div class="form-group required">
-                            <lsabel for="user_dept">Depertment</lsabel>
-                            <input type="text" class="form-control" required="" id="user_dept" name="user_dept" value=""
-                                placeholder="Enter your Depertment">
+                            <lsabel for="student_dept">Depertment</lsabel>
+                            <input type="text" class="form-control" required="" id="student_dept" name="student_dept"
+                                value="" placeholder="Enter your Depertment">
                         </div>
                         <div class="form-group required">
-                            <lsabel for="user_pass">Password</lsabel>
-                            <input type="password" class="form-control" required="" id="user_pass" name="user_pass"
-                                value="" placeholder="Enter your Password">
+                            <lsabel for="student_pass">Password</lsabel>
+                            <input type="password" class="form-control" required="" id="student_pass"
+                                name="student_pass" value="" placeholder="Enter your Password">
                         </div>
                         <div class="form-group required">
-                            <lsabel for="user_repass">Re-Password</lsabel>
-                            <input type="password" class="form-control" required="" id="user_repass" name="user_repass"
-                                value="" placeholder="Enter your Re-Password">
+                            <lsabel for="student_repass">Re-Password</lsabel>
+                            <input type="password" class="form-control" required="" id="student_repass"
+                                name="student_repass" value="" placeholder="Enter your Re-Password">
                         </div>
 
                         <div class="form-group mt-4 mb-4">
@@ -61,7 +73,7 @@
                     </form>
                     <p class="small-xl pt-3 text-center">
                         <span class="text-muted">Already have an account?</span>
-                        <a href="#">Log In</a>
+                        <a href="/login_student/">Log In</a>
                     </p>
                 </div>
             </div>
