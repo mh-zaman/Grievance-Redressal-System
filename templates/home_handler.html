@@ -1,0 +1,218 @@
+<!Doctype html>
+{% extends 'navbar_handler.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% block css %}
+
+<style>
+    * {
+        box-sizing: border-box
+    }
+
+    body {
+        font-family: "Lato", sans-serif;
+    }
+
+    /* Style the tab */
+    .tab {
+        float: left;
+        border: 1px solid #ccc;
+        background-color: #2a2185;
+        width: 30%;
+        height: 100%;
+    }
+
+    /* Style the buttons inside the tab */
+    .tab button {
+        display: block;
+        background-color: inherit;
+        color: #ffffff;
+        padding: 22px 16px;
+        width: 100%;
+        border: none;
+        outline: none;
+        text-align: left;
+        cursor: pointer;
+        font-size: 17px;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: #000a0ecd;
+    }
+
+    /* Create an active/current "tab button" class */
+    .tab button.active {
+        background-color: #000a0ecd;
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+        float: left;
+        padding: 0px 12px;
+        border: 1px solid #474281;
+        width: 70%;
+        border-left: none;
+        height: 100%;
+        display: none;
+    }
+
+    /* Clear floats after the tab */
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="tab">
+    <button class="tablinks" onmouseover="openCity(event, 'policy')">Grievance Redress Policy of EWU</button>
+    <button class="tablinks" onmouseover="openCity(event, 'means')">Unfair or Illegal means</button>
+    <button class="tablinks" onmouseover="openCity(event, 'Tokyo')">Grievance Redressal Committees </button>
+    <button class="tablinks" onmouseover="openCity(event, 'Tokyo')">Principles of Handling of Grievance </button>
+    <button class="tablinks" onmouseover="openCity(event, 'Tokyo')">Steps of Handling of Grievance </button>
+    <button class="tablinks" onmouseover="openCity(event, 'Tokyo')">Disciplinary or Administrative Actions </button>
+    <button class="tablinks" onmouseover="openCity(event, 'Tokyo')">Settling the case of Grievance </button>
+    <button class="tablinks" onmouseover="openCity(event, 'Tokyo')">Responsibilities of the committee </button>
+    <button class="tablinks" onmouseover="openCity(event, 'Tokyo')">Privacy [&] Policy </button>
+</div>
+
+<div id="policy" class="tabcontent">
+    <h2>Grievance Redress Policy of EWU</h2>
+    <p>
+    <h3>MISCONDUCT </h3>
+    Any conduct of a student that contravenes the Disciplinary Code and/or negatively impacts on the goals of the
+    code may be regarded as misconduct and subject to disciplinary measures.
+    A student is guilty of misconduct if she/he:<br><br>
+    <b>1.</b> with specific regard to assessments, takes recourse to adopting illegal means as defined.<br><br>
+    <b>2.</b> intentionally or negligently contravenes or subverts, or attempts to contravene or subvert, or
+    assists, encourages or persuades any other person to contravene or subvert this code, any regulation or rule or
+    instruction of the university.<br><br>
+    <b>3.</b> refuses or fails to comply with a lawful instruction or request of an employee of the university
+    authorized to give such instruction or make such request or acts contrary to such instruction or
+    request.<br><br>
+    <b>4.</b> conducts in a manner that intentionally and substantially obstructs or disrupts teaching or freedom of
+    movement or other lawful activities on university premises or in connection with any university-sponsored event
+    or activity and is not constitutionally and/or legally protected.<br><br>
+    <b>5.</b> commits any crime whilst on university premises (for the purpose of this clause no adjudication order
+    of the court of law in respect of the alleged crime in question is required).<br><br>
+    <b>6.</b> intentionally or negligently misuses, damages, defaces, destroys or alienates, or without
+    authorization uses any space, building, furniture or equipment, computer, vehicle, notes, documents or any other
+    thing owned or controlled by the university or by any employee of the university, or by any registered student
+    of the university.<br><br>
+    <b>7.</b> intentionally or negligently mismanages and/or misappropriates university funds.<br><br>
+    <b>8.</b> brings intoxicating liquor or substance into the premises of the university and/or consumes or abuses
+    intoxicating liquor or substance and/or is under the influence of such liquor while on university
+    premises.<br><br>
+    <b>9.</b> brings an illegal dependence-producing drug and/or controlled substances under the Narcotics Control
+    Act, 1990 onto the premises of the university or is found to be in exclusive possession of such illegal
+    substance or is under the influence of such substance whilst on the premises of the university.<br><br>
+    <b>10.</b>smokes/vapes anywhere within the university premises.<br><br>
+    <b>11.</b>brings into or stores on university premises a firearm, other dangerous weapon of any kind, and/or any
+    kind of harmful chemicals and/or explosives.<br><br>
+    <b>12.</b>brings onto or stores on university premises any kind of fuel that cannot reasonably be shown to be
+    required for the operation of a motor vehicle or any device allowed to bring by the university.<br><br>
+    <b>13.</b>sexually (as defined in para-4 of the High Court's Directives) or otherwise harasses any person whilst
+    on university premises.<br><br>
+    <b>14.</b>commits any sexual and/or indecent activities, whether voluntarily or involuntarily, or whether
+    forcible or nonforcible, or whether with consent or without consent of the counterpart, within the university
+    premises.<br><br>
+    <b>15.</b>commits any other act on university premises, which is indecent and/or racist and/or endangers or is
+    likely to endanger health, welfare, or safety of other person and/or prejudices or is likely to prejudice
+    honour, dignity, rights, privileges or property of other members of the academic community, staff/employee of
+    the university and visitors to the campus.<br><br>
+    <b>16.</b>initiates or associates or assembles or engages in any student organization or living group, or, any
+    pastime or amusement engaged in with respect to an organization or living group, that causes or is likely to
+    cause bodily danger or physical harm, or serious mental or emotional harm, or humiliation by ritual act, or
+    sleep deprivation, or forcible participation in any philosophical or religious or cultural or political
+    activities, to any student or any other person attending the university, and/or that causes or is likely to
+    cause voluntary participation in any political activities resulting in division in the unity, amity or
+    tranquility of the academic community.<br><br>
+    <b>17.</b>unlawfully expresses, publishes or disseminates in speech, writing, print or other medium on
+    university premises any views, beliefs or ideology that would infringe upon the dignity or other human rights of
+    any student or groups of students, or any employee of the university, or person invited by the university as a
+    guest of the university.<br><br>
+    <b>19.</b>commits any act(s) bullying other student(s).<br><br>
+    <b>19.</b>without the written permission of the Vice Chancellor uses the name of the university or uses or
+    displays the logo of the university.<br><br>
+    <b>20.</b>convenes an assembly on university premises without obtaining the prior consent of the Vice Chancellor
+    (or the person duly authorized by her/him) or the management of the regional center, or attends a gathering
+    prohibited by the Principal and Vice Chancellor or the management of the regional center.<br><br>
+    <b>21.</b>knowingly makes a false statement about the university in any media or anywhere or otherwise
+    intentionally provides materially false information to anyone in or outside the university about the university
+    or any matter thereof.<br><br>
+    <b>22.</b>intentionally or negligently tenders or presents to any teacher/employee of the university any
+    document, record, or evidence which she/he knows or ought reasonably to know to be false or forged and which
+    causes or has the potential to cause prejudice to the administrative, financial, or academic interests of the
+    university.<br><br>
+    <b>23.</b>accepts or offers a bribe from/to students, employees or any other official of the university.<br><br>
+    <b>24.</b>reproduces or transmits in any form or manner, whether electronically or mechanically (including
+    photocopying and faxing), any study guide, book, thesis, dissertation, article, examination paper, lecture,
+    printed tutorial matter or any other study aids in respect of which copyright exists, unless the copyright
+    owner's permission for the reproduction or transmission is obtained.<br><br>
+    </p>
+</div>
+
+<div id="means" class="tabcontent">
+    <h2>Unfair or Illegal means</h2>
+    <p> 1. Communicating or attempting to communicate verbally or otherwise any information relating to an
+        examination by a student to any other examinee or examinees in the examination hall.<br><br>
+        2. Possession of any written unauthorized chit/paper/ book(s)/materials/means and/or any unauthorised aid(s)
+        related to the subject of examination, at any time during the examination.<br><br>
+        3. Copying or attempting to copy from other examinee(s) or resorting to any other
+        unfair means.<br><br>
+        4. Arrogant behaviour or use of insolent or indecent language to any person in the exam hall.<br><br>
+        5. Unauthorized possession of or attempt to possess examination script or question(s) any time before the
+        specified time of a particular examination.<br><br>
+        6. Influencing or attempting to influence any person(s) involved with the examination to allow/give undue
+        advantages or benefits to self or any other person(s).<br><br>
+        7. Taking the examination through a proxy or becoming a proxy for any examinee.<br><br>
+        8. Collecting or attempting to collect from outside, any exam related materials.<br><br>
+        9. Any use of cell-phone or any other unauthorized electronic device(s) or code/sign/symbol etc. related to
+        the examination, anytime during the examination.<br><br>
+        10.Intentionally or negligently assisting another student during the examination<br><br>
+        11. The removal or attempted removal from an examination room of any examination book or writing paper supplied by the university for the purposes of answering an examination.<br><br>
+        12. The use of a false name, identity number or student number in an examination.<br><br>
+        13.Commissioning of any other fraudulent or dishonest practice whereby a student, whilst being examined by the university, seeks to mislead or deceive the examiner or the examination officer.<br><br>
+        14.Submission for examination as own work any matter that has been copied, reproduced or exacted in whole or in part from the work of another student or any other person, or which is substantially the same in whole or in part as the work of another student or any other person, or otherwise committing an act of plagiarism.<br><br>
+        15. Aiding, abetting or assisting any other student in 'adopting unfair means' in any examination.<br><br></p>
+</div>
+
+<div id="Tokyo" class="tabcontent">
+    <h2>Settling the case of Grievance </h2>
+    <p><b><u>Dr. Anisur Rahman Proctor, EWU Associate Professor, Dept. of CSE</u></b><br></p>
+    <p><b><u>Dr. Shawkat Md Aminul Islam Assistant Proctor, EWU Assistant Professor, Dept. of Pharmacy<br><br>
+        Farzana Sharmin Pamela Islam Assistant Proctor, EWU Assistant Professor, Dept. of English<br><br>
+        Gazi Quamrul Hasan Assistant Proctor, EWU Senior Lecturer Dept. of ECO<br><br>
+        Md. Shakib Hossain Assistant Proctor, EWU Senior Lecturer Dept. of BA<br><br>
+        Md. Rashedul Amin Tuhin Assistant Proctor, EWU Senior Lecturer Dept. of CSE</u></b><br><br></p>
+</div>
+
+<div class="clearfix"></div>
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+{% endblock %}

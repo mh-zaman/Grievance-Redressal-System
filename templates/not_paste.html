@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% extends 'navbar_handler.html' %}
+{% load static %}
+
+{% block title %} Complaint Dashboard {% endblock %}
+
+{% block css %}
+<style>
+    /* Add some basic styling for the page */
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .dashboard {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .dashboard-item {
+        width: 200px;
+        height: 150px;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 8px;
+        text-align: center;
+        color: #fff;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .total {
+        background-color: #ff6b6b;
+    }
+
+    .resolved {
+        background-color: #55efc4;
+    }
+
+    .pending {
+        background-color: #fdcb6e;
+    }
+
+    .raised {
+        background-color: #81ecec;
+    }
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+<h1>Complaint Dashboard</h1>
+
+<div class="dashboard">
+    <div class="dashboard-item total">
+        <h2>Total Complaints</h2>
+        <p>{{ total_complaints }}</p>
+    </div>
+
+    <div class="dashboard-item resolved">
+        <h2>Resolved Complaints</h2>
+        <p>{{ resolved_complaints }}</p>
+    </div>
+
+    <div class="dashboard-item pending">
+        <h2>Pending Complaints</h2>
+        <p>{{ pending_complaints }}</p>
+    </div>
+
+    <div class="dashboard-item raised">
+        <h2>Raised Complaints</h2>
+        <p>{{ raised_complaints }}</p>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

@@ -1,0 +1,95 @@
+<!Doctype html>
+{% extends 'navbar_handler.html' %}
+
+{% block title %} All Complaints {% endblock %}
+
+{% block css %}
+
+<style>
+    /* Add some basic styling for the page */
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #ccc;
+        text-align: center;
+    }
+
+    th {
+        background-color: #eee;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    select, button {
+        padding: 5px 10px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<h1>All Complaints</h1>
+
+    <form method="GET" action="">
+        <label for="status">Filter by Status:</label>
+        <select name="status" id="status">
+            <option value="">All</option>
+            <option value="pending">Pending</option>
+            <option value="in_progress">In Progress</option>
+            <option value="raised">Raised</option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Subject</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for complaint in complaints %}
+                <tr>
+                    <td>{{ complaint.compalint_id }}</td>
+                    <td>{{ complaint.complaint_subject }}</td>
+                    <td>{{ complaint.compalint_description }}</td>
+                    <td>{{ complaint.complaint_progress }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'change_complaint_progress' complaint.compalint_id %}">
+                            {% csrf_token %}
+                            <select name="status">
+                                <option value="pending">Pending</option>
+                                <option value="in_progress">In Progress</option>
+                                <option value="raised">Raised</option>
+                            </select>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6">No complaints found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
