@@ -1,12 +1,12 @@
 <!Doctype html>
-{% extends 'navbar_authenticated.html' %}
-{% block title %}Proctor Profile {% endblock %}
+{% extends 'navbar_handler.html' %}
+{% block title %} Handler Profile {% endblock %}
 {% block css %}
 {% endblock %}
 {% block body %}
 
 <div class="container">
-    <h1 class="text-center">Proctor Profile</h1>
+    <h1 class="text-center">Handler Profile</h1>
     <div class="row">
         <div class="col-md-4 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="img-thumbnail"
@@ -40,9 +40,9 @@
                 </div>
             </div>
 
-            <a href="" style="width: 9rem;" class="btn btn-outline-primary mt-3">Edit Profile</a>
+            <a href="/edit_profile_handler/" style="width: 9rem;" class="btn btn-outline-primary mt-3">Edit Profile</a>
             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-            <a href="" style="width: 12rem;" class="btn btn-outline-primary mt-3">Change Password</a>
+            <a href="/change_password_handler/" style="width: 12rem;" class="btn btn-outline-primary mt-3">Change Password</a>
 
 
             <div class="row pt-5">
@@ -50,4 +50,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock %} 

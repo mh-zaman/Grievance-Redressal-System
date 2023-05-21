@@ -1,5 +1,5 @@
 <!Doctype html>
-{% extends 'navbar_faculty.html' %}
+{% extends 'navbar_handler.html' %}
 {% block title %} Update Profile {% endblock %}
 {% block css %}
 {% endblock %}
@@ -8,19 +8,6 @@
     <h1 class="text-center">Update Profile</h1>
     <form method="POST">
         {% csrf_token %}
-        {% if messages %}
-        {% for result in messages %}
-        {% if result.tags == "error" %}
-        <div class="alert alert-danger" style="color: red;">
-            {{ result }}
-        </div>
-        {% else %}
-        <div class="alert alert-success" style="color: green;">
-            {{ result }}
-        </div>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
         <div class="row">
             <div class="col-md-4 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="img-thumbnail"
@@ -31,36 +18,27 @@
                 <div class="row mt-4">
                     <div class="form-group col-md-12">
                         <label><i style="font-weight: bold;">Name</i></label>
-                        <input type="text" class="form-control mt-2" name="faculty_name" value="{{user.faculty_name}}" required>
+                        <input type="text" class="form-control mt-2" name="username" value="{{user}}" required>
                     </div>
                 </div>
 
                 <div class="row mt-4">
                     <div class="form-group col-md-6">
                         <label><i style="font-weight: bold;">Email</i></label>
-                        <input type="email" class="form-control mt-2" name="faculty_email" value="{{user.faculty_email}}" required>
+                        <input type="email" class="form-control mt-2" name="email" value="{{user.email}}" required>
                     </div>
                     <div class="form-group col-md-6">
                         <label><i style="font-weight: bold;">Contact</i></label>
-                        <input type="text" class="form-control mt-2" name="faculty_contact" value="{{user.faculty_contact}}" required>
-                    </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="form-group col-md-6">
-                        <label><i style="font-weight: bold;">Designation</i></label>
-                        <input type="text" class="form-control mt-2" name="faculty_designation" value="{{user.faculty_designation}}" required>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label><i style="font-weight: bold;">Department</i></label>
-                        <input type="text" class="form-control mt-2" name="faculty_department" value="{{user.faculty_semester}}" required>
+                        <input type="text" class="form-control mt-2" name="phone" value="{{user.faculty.phone}}"
+                            required>
                     </div>
                 </div>
 
                 <div class="row mt-4">
                     <div class="form-group col-md-12">
                         <label><i style="font-weight: bold;">Address</i></label>
-                        <input type="text" class="form-control mt-2" name="faculty_address" value="{{user.faculty_address}}" required>
+                        <input type="text" class="form-control mt-2" name="address" value="{{user.faculty.address}}"
+                            required>
                     </div>
                 </div>
 

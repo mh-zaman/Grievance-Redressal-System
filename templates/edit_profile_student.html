@@ -8,50 +8,69 @@
     <h1 class="text-center">Update Profile</h1>
     <form method="POST">
         {% csrf_token %}
+        {% if messages %}
+        {% for result in messages %}
+        {% if result.tags == "error" %}
+        <div class="alert alert-danger" style="color: red;">
+            {{ result }}
+        </div>
+        {% else %}
+        <div class="alert alert-success" style="color: green;">
+            {{ result }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
         <div class="row">
             <div class="col-md-4 border-right">
-                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="img-thumbnail"
-                        width="70%" src="{{user.student.image.url}}">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img style="border-radius: 40%;"
+                        class="img-thumbnail" src="{{user.student_image.url}}">
+                    <input type="file" id="image_student" class="form-control" name="image_student"
+                        placeholder="Choose image">
                 </div>
             </div>
+
+
             <div class="col-md-8 border-right">
                 <div class="row mt-4">
                     <div class="form-group col-md-12">
                         <label><i style="font-weight: bold;">Name</i></label>
-                        <input type="text" class="form-control mt-2" name="username" value="{{user}}" required>
+                        <input type="text" class="form-control mt-2" name="student_name" value="{{user.student_name}}"
+                            required>
                     </div>
                 </div>
 
                 <div class="row mt-4">
                     <div class="form-group col-md-6">
                         <label><i style="font-weight: bold;">Email</i></label>
-                        <input type="email" class="form-control mt-2" name="email" value="{{user.email}}" required>
+                        <input type="email" class="form-control mt-2" name="student_email"
+                            value="{{user.student_email}}" required>
                     </div>
                     <div class="form-group col-md-6">
                         <label><i style="font-weight: bold;">Contact</i></label>
-                        <input type="text" class="form-control mt-2" name="phone" value="{{user.student.phone}}"
-                            required>
+                        <input type="text" class="form-control mt-2" name="student_contact"
+                            value="{{user.student_contact}}" required>
                     </div>
                 </div>
 
                 <div class="row mt-4">
                     <div class="form-group col-md-6">
                         <label><i style="font-weight: bold;">ID</i></label>
-                        <input type="text" class="form-control mt-2" name="student_id"
-                            value="{{user.student.student_id}}" required>
+                        <input type="text" class="form-control mt-2" name="student_id" value="{{user.student_id}}"
+                            readonly>
                     </div>
                     <div class="form-group col-md-6">
                         <label><i style="font-weight: bold;">Department</i></label>
-                        <input type="text" class="form-control mt-2" name="semester" value="{{user.student.semester}}"
-                            required>
+                        <input type="text" class="form-control mt-2" name="student_department"
+                            value="{{user.student_department}}" required>
                     </div>
                 </div>
 
                 <div class="row mt-4">
                     <div class="form-group col-md-12">
                         <label><i style="font-weight: bold;">Address</i></label>
-                        <input type="text" class="form-control mt-2" name="address" value="{{user.student.address}}"
-                            required>
+                        <input type="text" class="form-control mt-2" name="student_address"
+                            value="{{user.student_address}}" required>
                     </div>
                 </div>
 

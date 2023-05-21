@@ -16,7 +16,7 @@
             <div class="col-md-5 mx-auto">
                 <div class="card card-body">
 
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
 
                         {% csrf_token %}
                         {% if messages %}
@@ -52,7 +52,7 @@
                         <div class="form-group required">
                             <lsabel for="faculty_dept">Designation</lsabel>
                             <input type="text" class="form-control" required="" id="faculty_designation"
-                                name="faculty_designtion" value="" placeholder="Enter your Designation">
+                                name="faculty_designation" value="" placeholder="Enter your Designation">
                         </div>
 
                         <div class="form-group required">
@@ -66,6 +66,11 @@
                                 name="faculty_repass" value="" placeholder="Enter your Re-Password">
                         </div>
 
+                        <div class="form-group required">
+                            <lsabel for="faculty_image">Image</lsabel>
+                            <input type="file"  id="faculty_image" class="form-control" name="faculty_image" placeholder="Choose image" required>
+                        </div>
+
                         <div class="form-group mt-4 mb-4">
 
                         </div>
@@ -76,7 +81,7 @@
                     <p class="small-xl pt-3 text-center">
                         <span class="text-muted">Already have an account?</span>
                         <a href="/login_faculty/">Log In</a>
-                    </p>
+                    </p> 
                 </div>
             </div>
         </div>

@@ -6,10 +6,8 @@
 {% block css %}
 
 <style>
-    /* Add some basic styling for the page */
     body {
         font-family: Arial, sans-serif;
-        padding: 20px;
     }
 
     h1 {
@@ -27,16 +25,19 @@
 
     th,
     td {
+        margin-bottom: 20px;
         padding: 10px;
         border: 1px solid #ccc;
         text-align: center;
     }
 
     th {
+        margin-bottom: 20px;
         background-color: #eee;
     }
 
     tr:nth-child(even) {
+        margin-bottom: 20px;
         background-color: #f2f2f2;
     }
 
@@ -49,17 +50,17 @@
         color: #fff;
         text-transform: uppercase;
     }
-
-    .status-in-progress {
-        background-color: #ff9800;
-    }
-
-    .status-solved {
-        background-color: #4caf50;
-    }
-
-    .status-pending {
-        background-color: #f44336;
+    .download-button {
+        background-color: blue;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
     }
 </style>
 
@@ -76,15 +77,18 @@
             <th>Subject</th>
             <th>Description</th>
             <th>Status</th>
+            <th>Download Complaint</th>
         </tr>
-    </thead> 
+    </thead>
     <tbody>
         {% for complaint in complaints %}
         <tr>
-            <td>{{ complaint.compalint_id }}</td>
-            <td>{{ complaint.complaint_subject }}</td>
-            <td>{{ complaint.compalint_description }}</td>
-            <td>{{ complaint.complaint_progress }}</td>
+            <td>{{ complaint.4 }}</td>
+            <td>{{ complaint.1 }}</td>
+            <td>{{ complaint.2 }}</td>
+            <td>{{ complaint.3 }}</td>
+            <td><button type="button" id="download_pdf" onclick="location.href='/pdf_generated/{{complaint.0}}/'"
+                    class="download-button">Download</button></td>
         </tr>
         {% empty %}
         <tr>

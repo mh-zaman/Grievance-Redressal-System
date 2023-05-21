@@ -69,6 +69,20 @@
 <main>
     <div class="container">
         <form method="POST">
+            {% csrf_token %}
+            {% if messages %}
+            {% for result in messages %}
+            {% if result.tags == "error" %}
+            <div class="alert alert-danger" style="color: red;">
+                {{ result }}
+            </div>
+            {% else %}
+            <div class="alert alert-success" style="color: green;">
+                {{ result }}
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
             <label for="subject">Subject:</label>
             <input type="text" id="subject" name="subject">
 
