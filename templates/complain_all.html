@@ -21,7 +21,8 @@
         width: 100%;
     }
 
-    th, td {
+    th,
+    td {
         padding: 10px;
         border: 1px solid #ccc;
         text-align: center;
@@ -35,8 +36,22 @@
         background-color: #f2f2f2;
     }
 
-    select, button {
+    select,
+    button {
         padding: 5px 10px;
+    }
+
+    .download-button {
+        background-color: rgb(255, 0, 0);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
     }
 </style>
 {% endblock %}
@@ -45,51 +60,70 @@
 
 <h1>All Complaints</h1>
 
-    <form method="GET" action="">
-        <label for="status">Filter by Status:</label>
-        <select name="status" id="status">
-            <option value="">All</option>
-            <option value="pending">Pending</option>
-            <option value="in_progress">In Progress</option>
-            <option value="raised">Raised</option>
-        </select>
-        <button type="submit">Filter</button>
-    </form>
+<!-- <form method="GET" action="">
+    <label for="complaint_status">Filter by Status:</label>
+    <select name="complaint_status" id="complaint_status">
+        <option value="">All</option>
+        <option value="Pending">Pending</option>
+        <option value="Raised">Raised</option>
+        <option value="InProgress">In Progress</option>
+        <option value="Resolved">Resolved</option>
+    </select>
+    <button type="submit">Filter</button>
+</form> -->
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Subject</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for complaint in complaints %}
-                <tr>
-                    <td>{{ complaint.compalint_id }}</td>
-                    <td>{{ complaint.complaint_subject }}</td>
-                    <td>{{ complaint.compalint_description }}</td>
-                    <td>{{ complaint.complaint_progress }}</td>
-                    <td>
-                        <form method="POST" action="{% url 'change_complaint_progress' complaint.compalint_id %}">
-                            {% csrf_token %}
-                            <select name="status">
-                                <option value="pending">Pending</option>
-                                <option value="in_progress">In Progress</option>
-                                <option value="raised">Raised</option>
-                            </select>
-                            <button type="submit">Submit</button>
-                        </form>
-                    </td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="6">No complaints found.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Subject</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Action</th>
+            <th>Delete</th>
+
+        </tr>
+    </thead>
+    <form method="POST">
+        {% csrf_token %}
+        <select name="stat" onchange="this.form.submit()">
+            <option >Select your status to filter post</option>
+            <option value="All">All Types </option>
+            <option value="Pending">Pending</option>
+            <option value="Raised">Raised</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
+        </select>
+    </form>
+    <tbody>
+        {% for complaint in complaints %}
+        <tr>
+            <td>{{ complaint.0 }}</td>
+            <td>{{ complaint.1 }}</td>
+            <td>{{ complaint.2 }}</td>
+            <td>{{ complaint.3 }}</td>
+            <td>
+                <form method="POST" action="{% url 'action_complaint' %}">
+                    {% csrf_token %}
+                    <select name="stat" onchange="this.form.submit()">
+                        <option>Select </option>
+                        <option value="Pending">Pending</option>
+                        <option value="Raised">Raised</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Resolved">Resolved</option>
+                    </select>
+                    <input type="hidden" name="complaint_id" value="{{ complaint.0 }}">
+                </form>
+            </td>
+            
+            <td><button class = "downlaod-button" type="button"  onclick="location.href='/delete_complaint/{{complaint.0}}/'" >Delete</button></td>
+        </tr>
+
+        {% empty %}
+        <tr>
+            <td colspan="6">No complaints found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

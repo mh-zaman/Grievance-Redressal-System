@@ -25,29 +25,33 @@
     .dashboard-item {
         width: 200px;
         height: 150px;
-        padding: 20px;
+        padding: 15px;
         margin: 10px;
         border-radius: 8px;
         text-align: center;
         color: #fff;
-        font-size: 20px;
+        font-size: 30px;
         font-weight: bold;
     }
 
     .total {
-        background-color: #ff6b6b;
-    }
-
-    .resolved {
-        background-color: #55efc4;
+        background-color: #9407b1;
     }
 
     .pending {
-        background-color: #fdcb6e;
+        background-color: #d3350d;
     }
 
     .raised {
-        background-color: #81ecec;
+        background-color: #08aec4;
+    }
+
+    .in-progress {
+        background-color: #0d4394;
+    }
+
+    .resolved {
+        background-color: #08c227;
     }
 </style>
 {% endblock %}
@@ -60,11 +64,6 @@
         <p>{{ total_complaints }}</p>
     </div>
 
-    <div class="dashboard-item resolved">
-        <h2>Resolved Complaints</h2>
-        <p>{{ resolved_complaints }}</p>
-    </div>
-
     <div class="dashboard-item pending">
         <h2>Pending Complaints</h2>
         <p>{{ pending_complaints }}</p>
@@ -74,7 +73,73 @@
         <h2>Raised Complaints</h2>
         <p>{{ raised_complaints }}</p>
     </div>
+
+    <div class="dashboard-item in-progress">
+        <h2>In Progess Complaints</h2>
+        <p>{{ in_progress_complaints }}</p>
+    </div>
+
+    <div class="dashboard-item resolved">
+        <h2>Resolved Complaints</h2>
+        <p>{{ resolved_complaints }}</p>
+    </div>
 </div>
+
+<canvas id="complaintChart"></canvas>
+
+
 {% endblock %}
 {% block js %}
-{% endblock %} 
+<script>
+    // Receive complaint statistics as JSON data from the server
+    const complaintData = JSON.parse('{{ complaint_statistics|escapejs }}');
+
+    // Populate the dashboard item values with the received data
+    document.getElementById('total_complaints').innerText = complaintData.total_complaints;
+    document.getElementById('pending_complaints').innerText = complaintData.pending_complaints;
+    document.getElementById('raised_complaints').innerText = complaintData.raised_complaints;
+    document.getElementById('in_progress_complaints').innerText = complaintData.in_progress_complaints;
+    document.getElementById('resolved_complaints').innerText = complaintData.resolved_complaints;
+
+    // Get the canvas element and create a chart context
+    const ctx = document.getElementById('complaintChart').getContext('2d');
+
+    // Create the bar chart
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Pending', 'Raised', 'In Progress', 'Resolved'],
+            datasets: [{
+                label: 'Complaints',
+                data: [
+                    complaintData.pending,
+                    complaintData.raised,
+                    complaintData.inProgress,
+                    complaintData.resolved
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    precision: 0
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

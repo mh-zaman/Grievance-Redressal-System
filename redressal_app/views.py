@@ -19,6 +19,9 @@ from redressal_app.models import ComplaintModel, FacultyModel, HandlerModel, Pro
 def navbar_unauthenticated(request):
     return render (request, 'navbar_unauthenticated.html')
 
+def startup_page(request):
+    return render (request, 'startup_page.html')
+
 def home_unauth(request):
     return render (request, 'home_unauth.html')
 
@@ -66,7 +69,7 @@ def login_proctor(request):
             else:
                 messages.error(
                     request, 'Password incorrect...!')
-        except ProctorModel.DoesNotExist as e:
+        except HandlerModel.DoesNotExist as e:
             messages.error(request, 'No user found of this email....!')    
     return render (request, 'login_proctor.html')
 
@@ -200,12 +203,9 @@ def edit_profile_student(request):
         user = StudentModel.objects.get(student_email=request.session['email'])
         if request.method == 'POST':
             user.student_name = request.POST.get('student_name')
-            user.student_email = request.POST.get('student_email')
             user.student_department = request.POST.get('student_department')
             user.student_contact = request.POST.get('student_contact')
             user.student_address = request.POST.get('student_address')
-            if len(request.FILES) != 0:
-                user.student_image = request.FILES['image_student']
             user.save()
             messages.success(request, "Profile updated successfully...!")
         return render(request, 'edit_profile_student.html', {'user': user})
@@ -352,12 +352,9 @@ def edit_profile_faculty(request):
         user = FacultyModel.objects.get(faculty_email=request.session['email'])
         if request.method == 'POST':
             user.faculty_name = request.POST.get('faculty_name')
-            user.faculty_email = request.POST.get('faculty_email')
             user.faculty_department = request.POST.get('faculty_department')
             user.faculty_contact = request.POST.get('faculty_contact')
             user.faculty_address = request.POST.get('faculty_address')
-            if len(request.FILES) != 0:
-                user.faculty_image = request.FILES['image_faculty']
             user.save()
             messages.success(request, "Profile updated successfully...!")
         return render(request, 'edit_profile_faculty.html', {'user': user})
@@ -397,7 +394,7 @@ def pdf_generated_faculty(request, token):
                 'SELECT * FROM complaints WHERE complaint_id = %s;', [token])
             complaints = cursor.fetchall()
             cursor.close()
-            template_path = 'pdf_generated.html'
+            template_path = 'pdf_generated_faculty.html'
             context = {'user': user, 'complaint': complaints[0]}
 
             response = HttpResponse(content_type='application/pdf')
@@ -424,7 +421,7 @@ def pdf_generated_faculty(request, token):
 def navbar_handler(request):
     try:
         user = HandlerModel.objects.get(handler_email=request.session['email'])
-        return render(request, 'navbar_faculty.html', {'user': user})
+        return render(request, 'navbar_handler.html', {'user': user})
     except:
         messages.error(request, 'You need to login first')
         return render (request, 'login_handler.html')
@@ -432,25 +429,149 @@ def navbar_handler(request):
 
 
 def dashboard_handler(request):
-    return render (request, 'dashboard_handler.html')
+    try:
+        user = HandlerModel.objects.get(handler_email=request.session['email'])
+        
+        total_complaints = ComplaintModel.objects.count()
+        pending_complaints = ComplaintModel.objects.filter(complaint_status='Pending').count()
+        raised_complaints = ComplaintModel.objects.filter(complaint_status='Raised').count()
+        in_progress_complaints = ComplaintModel.objects.filter(complaint_status='In Progress').count()
+        resolved_complaints = ComplaintModel.objects.filter(complaint_status='Resolved').count()
+
+        return render(request, 'dashboard_handler.html', {
+            'user': user,
+            'total_complaints': total_complaints,
+            'pending_complaints': pending_complaints,
+            'raised_complaints': raised_complaints,
+            'in_progress_complaints': in_progress_complaints,
+            'resolved_complaints': resolved_complaints
+        })
+    except HandlerModel.DoesNotExist:
+        messages.error(request, 'You need to login first')
+        return redirect('login_handler')
 
 
 def complain_all(request):
-    return render (request, 'complain_all.html')
+    try:
+        user = HandlerModel.objects.get(handler_email=request.session['email'])
+        # complaints = ComplaintModel.objects.all()
+        
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM `complaints`;')
+        complaints = cursor.fetchall()
+        cursor.close()
+
+        # if request.method == 'GET':
+        #     status = request.GET.get('complaint_status', '')
+        #     if status:
+        #         complaints = complaints.filter(complaint_status=status)
+
+        if request.method == 'POST':
+            stat = request.POST.get('stat')
+            
+            if stat == 'All':
+                cursor = connection.cursor()
+                cursor.execute('SELECT * FROM `complaints`;')
+                complaints = cursor.fetchall()
+                cursor.close()
+            else:
+                cursor = connection.cursor()
+                cursor.execute('SELECT * FROM `complaints` Where complaint_status = %s;', [stat])
+                complaints = cursor.fetchall()
+                cursor.close()
+
+        return render(request, 'complain_all.html', {'user': user, 'complaints': complaints})
+    except HandlerModel.DoesNotExist:
+        messages.error(request, 'You need to login first')
+        return redirect('login_handler')
+    
+def delete_complaint(request, token):
+    cursor = connection.cursor()
+    cursor.execute('DELETE FROM `complaints` WHERE complaint_id = %s;', [token])
+    cursor.close()
+    
+    return redirect('complain_all')
+    
+    
+def action_complaint(request):
+    
+    if request.method == 'POST':
+        stat = request.POST.get('stat')
+        comp_id = request.POST.get('complaint_id')
+    
+        print('ami eikhane')
+        print(stat)
+        print(comp_id)
+        if stat == 'Pending':
+            cursor = connection.cursor()
+            cursor.execute('UPDATE `complaints` SET complaint_status = %s WHERE complaint_id = %s;', ['Pending', comp_id])
+            cursor.close()
+
+        elif stat == 'Raised':
+            cursor = connection.cursor()
+            cursor.execute('UPDATE `complaints` SET complaint_status = %s WHERE complaint_id = %s;', ['Raised', comp_id])
+            cursor.close()
+
+        elif stat == 'In Progress':
+            cursor = connection.cursor()
+            cursor.execute('UPDATE `complaints` SET complaint_status = %s WHERE complaint_id = %s;', ['In Progress', comp_id])
+            cursor.close()
+            
+        elif stat == 'Resolved':
+            cursor = connection.cursor()
+            cursor.execute('UPDATE `complaints` SET complaint_status = %s WHERE complaint_id = %s;', ['Resolved', comp_id])
+            cursor.close()
+        
+    return redirect('complain_all')
+    
+
 
 
 def profile_handler(request):
-    #print('Session Email: ')
-    #print(email)
-    #return render (request, 'profile_handler.html' , {'email': email})
-    return render (request, 'profile_handler.html')
+    try:
+        user = HandlerModel.objects.get(handler_email=request.session['email'])
+        return render(request, 'profile_handler.html', {'user': user})
+    except:
+        messages.error(request, 'You need to login first')
+        return redirect('login_handler')
+
 
 
 def edit_profile_handler(request):
-    return render (request, 'edit_profile_handler.html')
+    try:
+        user = HandlerModel.objects.get(handler_email=request.session['email'])
+        if request.method == 'POST':
+            user.handler_name = request.POST.get('handler_name')
+            user.handler_contact = request.POST.get('handler_contact')
+            user.handler_address = request.POST.get('handler_address')
+            user.save()
+            messages.success(request, "Profile updated successfully...!")
+        return render(request, 'edit_profile_handler.html', {'user': user})
+        
+    except:
+        messages.error(request, 'You need to login first')
+        return redirect('login_handler')
 
 def change_password_handler(request):
-    return render (request, 'change_password_handler.html')
+    try:
+        user = HandlerModel.objects.get(handler_email=request.session['email'])
+        if request.method == 'POST':
+            if check_password(request.POST.get('current_password'), user.handler_password):
+                new_password = request.POST.get('new_password')
+                confirm_password = request.POST.get('confirm_password')
+                if new_password != confirm_password:
+                    messages.error(request, 'Passwords do not match')
+                else:
+                    user.handler_password = make_password(new_password)
+                    user.save()
+                    messages.success(request, "Password changed successfully...!")
+            else:
+                messages.error(request, 'Current password is incorrect')
+                return render(request, 'change_password_handler.html', {'user': user})
+        return render(request, 'change_password_handler.html', {'user': user})
+    except:
+        messages.error(request, 'You need to login first')
+        return render (request, 'login_handler.html')
 
 
 
@@ -462,32 +583,84 @@ def change_password_handler(request):
 
 #------------------------------------------------------------------------------------------------------------------------------------------
 
-def complain_faculty(request):
-    return render (request, 'complain.html')
 
-
-
-
-def home_handler(request):
-    return render (request, 'home_handler.html')
-
-
-
-
-
-def profile_proctor(request):
-    return render (request, 'profile_proctor.html')
-
-def profile_handler(request):
-    return render (request, 'profile_handler.html')
-
-
-
-
+def navbar_proctor(request):
+    try:
+        user = ProctorModel.objects.get(proctor_email=request.session['email'])
+        return render(request, 'navbar_proctor.html', {'user': user})
+    except:
+        messages.error(request, 'You need to login first')
+        return render (request, 'login_proctor.html')
 
 
 def dashboard_proctor(request):
-    return render (request, 'dashboard_proctor.html')
+    try:
+        user = ProctorModel.objects.get(proctor_email=request.session['email'])
+        print(user)
+        print("Dekh shala")
+        return render(request, 'dashboard_proctor.html', {'user': user})
+    except:
+        messages.error(request, 'You need to login first')
+        return render (request, 'login_proctor.html')
 
-def paste(request):
-    return render (request, 'paste.html')
+
+def complain_all_proctor(request):
+    try:
+        user = ProctorModel.objects.get(proctor_email=request.session['email'])
+        return render(request, 'complain_all_proctor.html', {'user': user})
+    except:
+        messages.error(request, 'You need to login first')
+        return render (request, 'login_proctor.html')
+    
+    
+    
+    
+def profile_proctor(request):
+    try:
+        user = ProctorModel.objects.get(proctor_email=request.session['email'])
+        return render(request, 'profile_proctor.html', {'user': user})
+    except:
+        messages.error(request, 'You need to login first')
+        return redirect('login_proctor') 
+    
+    
+def edit_profile_proctor(request):
+    try:
+        user = ProctorModel.objects.get(proctor_email=request.session['email'])
+        if request.method == 'POST':
+            user.proctor_name = request.POST.get('proctor_name')
+            user.proctor_department = request.POST.get('proctor_department')
+            user.proctor_contact = request.POST.get('proctor_contact')
+            user.proctor_address = request.POST.get('proctor_address')
+            if len(request.FILES) != 0:
+                user.proctor_image = request.FILES['proctor_image']
+            user.save()
+            messages.success(request, "Profile updated successfully...!")
+        return render(request, 'edit_profile_proctor.html', {'user': user})
+        
+    except:
+        messages.error(request, 'You need to login first')
+        return redirect('login_proctor')     
+    
+    
+def change_password_proctor(request):
+    try:
+        user = ProctorModel.objects.get(proctor_email=request.session['email'])
+        if request.method == 'POST':
+            if check_password(request.POST.get('current_password'), user.proctor_password):
+                new_password = request.POST.get('new_password')
+                confirm_password = request.POST.get('confirm_password')
+                if new_password != confirm_password:
+                    messages.error(request, 'Passwords do not match')
+                else:
+                    user.proctor_password = make_password(new_password)
+                    user.save()
+                    messages.success(request, "Password changed successfully...!")
+            else:
+                messages.error(request, 'Current password is incorrect')
+                return render(request, 'change_password_proctor.html', {'user': user})
+        return render(request, 'change_password_proctor.html', {'user': user})
+    except:
+        messages.error(request, 'You need to login first')
+        return render (request, 'login_proctor.html')    
+    

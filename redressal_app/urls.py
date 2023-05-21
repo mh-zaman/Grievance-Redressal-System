@@ -4,7 +4,8 @@ from redressal_app import views
 urlpatterns = [
     
     path('navbar_unauthenticated/', views.navbar_unauthenticated, name="navbar_unauthenticated"),
-    path('', views.home_unauth, name="home_unauth"),
+    path('', views.startup_page, name="startup_page"),
+    path('home_unauth/', views.home_unauth, name="home_unauth"),
     path('about_unauth/', views.about_unauth, name="about_unauth"),
     path('login_faculty/', views.login_faculty, name="login_faculty"),
     path('login_handler/', views.login_handler, name="login_handler"),
@@ -13,6 +14,9 @@ urlpatterns = [
     path('registration_faculty/', views.registration_faculty, name="registration_faculty"),
     path('registration_student/', views.registration_student, name="registration_student"),
     path('logout/', views.logout, name="logout"),
+    
+    path('delete_complaint/<token>/', views.delete_complaint, name='delete_complaint'),
+    path('action_complaint/', views.action_complaint, name='action_complaint'),
     
     
     
@@ -40,12 +44,20 @@ urlpatterns = [
     
     
     
-    path('navnar_handler/', views.navbar_handler, name="navbar_handler"), 
+    path('navbar_handler/', views.navbar_handler, name="navbar_handler"), 
     path('dashboard_handler/', views.dashboard_handler, name="dashboard_handler"),
     path('complain_all/', views.complain_all, name="complain_all"),
     path('profile_handler/', views.profile_handler, name="profile_handler"),
     path('edit_profile_handler/', views.edit_profile_handler, name="edit_profile_handler"),
     path("change_password_handler/", views.change_password_handler, name="change_password_handler"),
+    
+    
+    path('navbar_proctor/', views.navbar_proctor, name="navbar_proctor"),
+    path('dashboard_proctor/', views.dashboard_proctor, name="dashboard_proctor"),
+    path('complain_all_proctor/', views.complain_all_proctor, name="complain_all_proctor"),
+    path('profile_proctor/', views.profile_proctor, name="profile_proctor"),
+    path('edit_profile_proctor/', views.edit_profile_proctor, name="edit_profile_proctor"),
+    path("change_password_proctor/", views.change_password_proctor, name="change_password_proctor"),
     
     
     
@@ -60,32 +72,4 @@ urlpatterns = [
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    path('complain/', views.complain_faculty, name="complain"),
-    
-    
-    path('home_unauth/', views.home_unauth, name="home_unauth"),
-    #path('home_auth/', views.home_auth, name="home_auth"),
-    path('home_handler/', views.home_handler, name="home_handler"),
-    
-    
-    path('profile_faculty/', views.profile_faculty, name="profile_faculty"),
-    path('profile_proctor/', views.profile_proctor, name="profile_proctor"),
-    path('profile_handler/', views.profile_handler, name="profile_handler"),
-    
-    
-    
-    path('dashboard_proctor/', views.dashboard_proctor, name="dashboard_proctor"),
-    
-    #path('', views.navbar_handler, name="navbar_handler"),
-    #path('', views.paste, name="paste"),
 ]

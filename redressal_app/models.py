@@ -61,7 +61,7 @@ class ProctorModel(models.Model):
     proctor_designation = models.CharField(max_length=255)
     proctor_department = models.CharField(max_length=255)
     proctor_password = models.CharField(max_length=5000)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True) 
     
     class Meta:
         db_table = 'proctor_users'
