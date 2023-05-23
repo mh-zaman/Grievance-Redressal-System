@@ -6,7 +6,6 @@
     /* Add some basic styling for the page */
     body {
         font-family: Arial, sans-serif;
-        padding: 20px;
     }
 
     h1 {
@@ -85,61 +84,7 @@
     </div>
 </div>
 
-<canvas id="complaintChart"></canvas>
-
 
 {% endblock %}
 {% block js %}
-<script>
-    // Receive complaint statistics as JSON data from the server
-    const complaintData = JSON.parse('{{ complaint_statistics|escapejs }}');
-
-    // Populate the dashboard item values with the received data
-    document.getElementById('total_complaints').innerText = complaintData.total_complaints;
-    document.getElementById('pending_complaints').innerText = complaintData.pending_complaints;
-    document.getElementById('raised_complaints').innerText = complaintData.raised_complaints;
-    document.getElementById('in_progress_complaints').innerText = complaintData.in_progress_complaints;
-    document.getElementById('resolved_complaints').innerText = complaintData.resolved_complaints;
-
-    // Get the canvas element and create a chart context
-    const ctx = document.getElementById('complaintChart').getContext('2d');
-
-    // Create the bar chart
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Pending', 'Raised', 'In Progress', 'Resolved'],
-            datasets: [{
-                label: 'Complaints',
-                data: [
-                    complaintData.pending,
-                    complaintData.raised,
-                    complaintData.inProgress,
-                    complaintData.resolved
-                ],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 206, 86, 0.5)',
-                    'rgba(75, 192, 192, 0.5)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    precision: 0
-                }
-            }
-        }
-    });
-</script>
 {% endblock %}

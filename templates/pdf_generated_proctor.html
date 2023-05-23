@@ -33,11 +33,12 @@
     <hr>
     <br>
     <h1><u>User Details Complaint Material</u></h1>
-    <div><img src="{{user.faculty_image.path}}" alt="logo" width="80" height="80"></div>
-    <p><b>Name:&nbsp;</b>{{user.faculty_name}}</p>
-    <p><b>Email:&nbsp;</b><a href="mailto:{{user.faculty_email}}">{{user.faculty_email}}</a></p>
-    <p><b>Contact:&nbsp;</b><a href="tel:{{user.faculty_contact}}">{{user.faculty_contact}}</a></p>
-    <p><b>Address:&nbsp;</b>{{user.faculty_address}}</p>
+    <!--<div><img src="{{user.student_image.path}}" alt="logo" width="80" height="80"></div>-->
+    <p><b>Name:&nbsp;</b>{{complaint.5}}</p>
+    <p><b>ID:&nbsp;</b>{{complaint.4}}</p>
+    <p><b>Email:&nbsp;</b><a href="mailto:{{complaint.complainer_email}}">{{complaint.6}}</a></p>
+    <p><b>Contact:&nbsp;</b><a href="mailto:{{complaint.complainer_contact}}">{{complaint.7}}</a></p>
+    <p><b>Address:&nbsp;</b>{{complaint.8}}</p>
     <br>
     <h1><u>Complaint Details</u></h1>
     <p><b>Title:&nbsp;</b>{{complaint.1}}</p>

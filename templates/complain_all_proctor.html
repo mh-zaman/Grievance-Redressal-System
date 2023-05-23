@@ -8,9 +8,7 @@
 <style>
     /* Add some basic styling for the page */
     body {
-        font-family: Arial, sans-serif;
-        padding: 20px;
-    }
+        font-family: Arial, sans-serif;    }
 
     h1 {
         margin-bottom: 20px;
@@ -21,7 +19,8 @@
         width: 100%;
     }
 
-    th, td {
+    th,
+    td {
         padding: 10px;
         border: 1px solid #ccc;
         text-align: center;
@@ -35,8 +34,27 @@
         background-color: #f2f2f2;
     }
 
-    select, button {
+    select,
+    button {
         padding: 5px 10px;
+    }
+
+    .red-button {
+        background-color: rgb(202, 10, 10);
+        color: white;
+    }
+
+    .download-button {
+        background-color: blue;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
     }
 </style>
 {% endblock %}
@@ -45,51 +63,75 @@
 
 <h1>All Complaints</h1>
 
-    <form method="GET" action="">
-        <label for="status">Filter by Status:</label>
-        <select name="status" id="status">
-            <option value="">All</option>
-            <option value="pending">Pending</option>
-            <option value="in_progress">In Progress</option>
-            <option value="raised">Raised</option>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Action</th>
+            <th>Delete</th>
+            <th>Download</th>
+        </tr>
+    </thead>
+    <form method="POST">
+        {% csrf_token %}
+        <select name="stat" onchange="this.form.submit()">
+            <option>Filter Complaints</option>
+            <option value="All">All</option>
+            <option value="Pending">Pending</option>
+            <option value="Raised">Raised</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
         </select>
-        <button type="submit">Filter</button>
     </form>
+    <tbody>
+        {% if messages %}
+        {% for result in messages %}
+        {% if result.tags == "error" %}
+        <div class="alert alert-danger" style="color: red;">
+            {{ result }}
+        </div>
+        {% else %}
+        <div class="alert alert-success" style="color: green;">
+            {{ result }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% for complaint in complaints %}
+        <tr>
+            <td>{{ complaint.5 }}</td>
+            <td>{{ complaint.6 }}</td>
+            <td>{{ complaint.1 }}</td>
+            <td>{{ complaint.2 }}</td>
+            <td>{{ complaint.3 }}</td>
+            <td>
+                <form method="POST" action="{% url 'action_complaint_proctor' %}">
+                    {% csrf_token %}
+                    <select name="stat" onchange="this.form.submit()">
+                        <option>Select </option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Resolved">Resolved</option>
+                    </select>
+                    <input type="hidden" name="complaint_id" value="{{ complaint.0}}">
+                </form>
+            </td>
+            <td>
+                <button class="red-button" type="button"
+                    onclick="location.href='/delete_complaint_proctor/{{complaint.0}}/'">Delete</button>
+            </td>
+            <td><button type="button" id="download_pdf" onclick="location.href='/pdf_generated_proctor/{{complaint.0}}/'"
+                class="download-button">Download</button></td>
+        </tr>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Subject</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for complaint in complaints %}
-                <tr>
-                    <td>{{ complaint.compalint_id }}</td>
-                    <td>{{ complaint.complaint_subject }}</td>
-                    <td>{{ complaint.compalint_description }}</td>
-                    <td>{{ complaint.complaint_progress }}</td>
-                    <td>
-                        <form method="POST" action="{% url 'change_complaint_progress' complaint.compalint_id %}">
-                            {% csrf_token %}
-                            <select name="status">
-                                <option value="pending">Pending</option>
-                                <option value="in_progress">In Progress</option>
-                                <option value="raised">Raised</option>
-                            </select>
-                            <button type="submit">Submit</button>
-                        </form>
-                    </td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="6">No complaints found.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        {% empty %}
+        <tr>
+            <td colspan="6">No complaints found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

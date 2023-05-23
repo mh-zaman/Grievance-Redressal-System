@@ -97,6 +97,8 @@ class ComplaintModel(models.Model):
     complainer_id = models.CharField(max_length=50)
     complainer_name = models.CharField(max_length=50)
     complainer_email = models.EmailField(max_length=50)
+    complainer_contact = models.CharField(max_length=15)
+    complainer_address = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     class Meta:
         db_table = 'complaints'

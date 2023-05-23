@@ -18,6 +18,9 @@ urlpatterns = [
     path('delete_complaint/<token>/', views.delete_complaint, name='delete_complaint'),
     path('action_complaint/', views.action_complaint, name='action_complaint'),
     
+    path('delete_complaint_proctor/<token>/', views.delete_complaint_proctor, name='delete_complaint_proctor'),
+    path('action_complaint_proctor/', views.action_complaint_proctor, name='action_complaint_proctor'),
+    
     
     
     
@@ -58,18 +61,5 @@ urlpatterns = [
     path('profile_proctor/', views.profile_proctor, name="profile_proctor"),
     path('edit_profile_proctor/', views.edit_profile_proctor, name="edit_profile_proctor"),
     path("change_password_proctor/", views.change_password_proctor, name="change_password_proctor"),
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    #---------------------------------------------------------------------------------------------------------------------------
-    
-    
-    
-    
+    path('pdf_generated_proctor/<token>/', views.pdf_generated_proctor, name='pdf_generated_proctor'),
 ]

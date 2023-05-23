@@ -9,7 +9,6 @@
     /* Add some basic styling for the page */
     body {
         font-family: Arial, sans-serif;
-        padding: 20px;
     }
 
     h1 {
@@ -41,17 +40,9 @@
         padding: 5px 10px;
     }
 
-    .download-button {
-        background-color: rgb(255, 0, 0);
+    .red-button {
+        background-color: rgb(202, 10, 10);
         color: white;
-        border: none;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
     }
 </style>
 {% endblock %}
@@ -60,35 +51,24 @@
 
 <h1>All Complaints</h1>
 
-<!-- <form method="GET" action="">
-    <label for="complaint_status">Filter by Status:</label>
-    <select name="complaint_status" id="complaint_status">
-        <option value="">All</option>
-        <option value="Pending">Pending</option>
-        <option value="Raised">Raised</option>
-        <option value="InProgress">In Progress</option>
-        <option value="Resolved">Resolved</option>
-    </select>
-    <button type="submit">Filter</button>
-</form> -->
-
 <table>
     <thead>
         <tr>
-            <th>ID</th>
+            <th>Complaint ID</th>
+            <th>Name</th>
+            <th>Email</th>
             <th>Subject</th>
             <th>Description</th>
             <th>Status</th>
             <th>Action</th>
             <th>Delete</th>
-
         </tr>
     </thead>
     <form method="POST">
         {% csrf_token %}
         <select name="stat" onchange="this.form.submit()">
-            <option >Select your status to filter post</option>
-            <option value="All">All Types </option>
+            <option>Filter Complaints</option>
+            <option value="All">All</option>
             <option value="Pending">Pending</option>
             <option value="Raised">Raised</option>
             <option value="In Progress">In Progress</option>
@@ -96,9 +76,24 @@
         </select>
     </form>
     <tbody>
+        {% if messages %}
+        {% for result in messages %}
+        {% if result.tags == "error" %}
+        <div class="alert alert-danger" style="color: red;">
+            {{ result }}
+        </div>
+        {% else %}
+        <div class="alert alert-success" style="color: green;">
+            {{ result }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
         {% for complaint in complaints %}
         <tr>
             <td>{{ complaint.0 }}</td>
+            <td>{{ complaint.5 }}</td>
+            <td>{{ complaint.6 }}</td>
             <td>{{ complaint.1 }}</td>
             <td>{{ complaint.2 }}</td>
             <td>{{ complaint.3 }}</td>
@@ -107,16 +102,22 @@
                     {% csrf_token %}
                     <select name="stat" onchange="this.form.submit()">
                         <option>Select </option>
-                        <option value="Pending">Pending</option>
                         <option value="Raised">Raised</option>
+
+                        <!--
+                        <option value="Pending">Pending</option>
                         <option value="In Progress">In Progress</option>
                         <option value="Resolved">Resolved</option>
+                        -->
+
                     </select>
-                    <input type="hidden" name="complaint_id" value="{{ complaint.0 }}">
+                    <input type="hidden" name="complaint_id" value="{{ complaint.0}}">
                 </form>
             </td>
-            
-            <td><button class = "downlaod-button" type="button"  onclick="location.href='/delete_complaint/{{complaint.0}}/'" >Delete</button></td>
+            <td>
+                <button class="red-button" type="button"
+                    onclick="location.href='/delete_complaint/{{complaint.0}}/'">Delete</button>
+            </td>
         </tr>
 
         {% empty %}

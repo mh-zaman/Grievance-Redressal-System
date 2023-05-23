@@ -183,6 +183,8 @@ def complain_new_student(request):
                 saveComplain.complainer_id = user.student_id
                 saveComplain.complainer_name = user.student_name
                 saveComplain.complainer_email = user.student_email
+                saveComplain.complainer_contact = user.student_contact
+                saveComplain.complainer_address = user.student_address
                 saveComplain.save()
                 messages.success(request, "Complaint saved successfully...!")
         return render(request, 'complain_new_student.html', {'user': user})
@@ -328,6 +330,8 @@ def complain_new_faculty(request):
                 saveComplain.complainer_id = user.faculty_id
                 saveComplain.complainer_name = user.faculty_name
                 saveComplain.complainer_email = user.faculty_email
+                saveComplain.complainer_contact = user.faculty_contact
+                saveComplain.complainer_address = user.faculty_address
                 
                 saveComplain.save()
                 messages.success(request, "Complaint saved successfully...!")
@@ -454,18 +458,12 @@ def dashboard_handler(request):
 def complain_all(request):
     try:
         user = HandlerModel.objects.get(handler_email=request.session['email'])
-        # complaints = ComplaintModel.objects.all()
+
         
         cursor = connection.cursor()
         cursor.execute('SELECT * FROM `complaints`;')
         complaints = cursor.fetchall()
         cursor.close()
-
-        # if request.method == 'GET':
-        #     status = request.GET.get('complaint_status', '')
-        #     if status:
-        #         complaints = complaints.filter(complaint_status=status)
-
         if request.method == 'POST':
             stat = request.POST.get('stat')
             
@@ -489,7 +487,7 @@ def delete_complaint(request, token):
     cursor = connection.cursor()
     cursor.execute('DELETE FROM `complaints` WHERE complaint_id = %s;', [token])
     cursor.close()
-    
+    messages.success(request, 'Complaint deleted successfully')
     return redirect('complain_all')
     
     
@@ -498,10 +496,6 @@ def action_complaint(request):
     if request.method == 'POST':
         stat = request.POST.get('stat')
         comp_id = request.POST.get('complaint_id')
-    
-        print('ami eikhane')
-        print(stat)
-        print(comp_id)
         if stat == 'Pending':
             cursor = connection.cursor()
             cursor.execute('UPDATE `complaints` SET complaint_status = %s WHERE complaint_id = %s;', ['Pending', comp_id])
@@ -520,9 +514,47 @@ def action_complaint(request):
         elif stat == 'Resolved':
             cursor = connection.cursor()
             cursor.execute('UPDATE `complaints` SET complaint_status = %s WHERE complaint_id = %s;', ['Resolved', comp_id])
+            
             cursor.close()
         
     return redirect('complain_all')
+
+
+def delete_complaint_proctor(request, token):
+    cursor = connection.cursor()
+    cursor.execute('DELETE FROM `complaints` WHERE complaint_id = %s;', [token])
+    cursor.close()
+    messages.success(request, 'Complaint deleted successfully')
+    return redirect('complain_all_proctor')
+    
+    
+def action_complaint_proctor(request):
+    
+    if request.method == 'POST':
+        stat = request.POST.get('stat')
+        comp_id = request.POST.get('complaint_id')
+        if stat == 'Pending':
+            cursor = connection.cursor()
+            cursor.execute('UPDATE `complaints` SET complaint_status = %s WHERE complaint_id = %s;', ['Pending', comp_id])
+            cursor.close()
+
+        elif stat == 'Raised':
+            cursor = connection.cursor()
+            cursor.execute('UPDATE `complaints` SET complaint_status = %s WHERE complaint_id = %s;', ['Raised', comp_id])
+            cursor.close()
+
+        elif stat == 'In Progress':
+            cursor = connection.cursor()
+            cursor.execute('UPDATE `complaints` SET complaint_status = %s WHERE complaint_id = %s;', ['In Progress', comp_id])
+            cursor.close()
+            
+        elif stat == 'Resolved':
+            cursor = connection.cursor()
+            cursor.execute('UPDATE `complaints` SET complaint_status = %s WHERE complaint_id = %s;', ['Resolved', comp_id])
+            
+            cursor.close()
+        
+    return redirect('complain_all_proctor')
     
 
 
@@ -596,21 +628,50 @@ def navbar_proctor(request):
 def dashboard_proctor(request):
     try:
         user = ProctorModel.objects.get(proctor_email=request.session['email'])
-        print(user)
-        print("Dekh shala")
-        return render(request, 'dashboard_proctor.html', {'user': user})
-    except:
+        
+        total_complaints = ComplaintModel.objects.count()
+        pending_complaints = ComplaintModel.objects.filter(complaint_status='Pending').count()
+        raised_complaints = ComplaintModel.objects.filter(complaint_status='Raised').count()
+        in_progress_complaints = ComplaintModel.objects.filter(complaint_status='In Progress').count()
+        resolved_complaints = ComplaintModel.objects.filter(complaint_status='Resolved').count()
+
+        return render(request, 'dashboard_proctor.html', {
+            'user': user,
+            'total_complaints': total_complaints,
+            'pending_complaints': pending_complaints,
+            'raised_complaints': raised_complaints,
+            'in_progress_complaints': in_progress_complaints,
+            'resolved_complaints': resolved_complaints
+        })
+    except ProctorModel.DoesNotExist:
         messages.error(request, 'You need to login first')
-        return render (request, 'login_proctor.html')
+        return redirect('login_proctor')
 
 
 def complain_all_proctor(request):
     try:
-        user = ProctorModel.objects.get(proctor_email=request.session['email'])
-        return render(request, 'complain_all_proctor.html', {'user': user})
-    except:
+        user = ProctorModel.objects.get(proctor_email=request.session['email'])        
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM `complaints`;')
+        complaints = cursor.fetchall()
+        cursor.close()
+        if request.method == 'POST':
+            stat = request.POST.get('stat')
+            
+            if stat == 'All':
+                cursor = connection.cursor()
+                cursor.execute('SELECT * FROM `complaints`;')
+                complaints = cursor.fetchall()
+                cursor.close()
+            else:
+                cursor = connection.cursor()
+                cursor.execute('SELECT * FROM `complaints` Where complaint_status = %s;', [stat])
+                complaints = cursor.fetchall()
+                cursor.close()
+        return render(request, 'complain_all_proctor.html', {'user': user, 'complaints': complaints})
+    except ProctorModel.DoesNotExist:
         messages.error(request, 'You need to login first')
-        return render (request, 'login_proctor.html')
+        return redirect('login_proctor')
     
     
     
@@ -663,4 +724,35 @@ def change_password_proctor(request):
     except:
         messages.error(request, 'You need to login first')
         return render (request, 'login_proctor.html')    
+    
+    
+def pdf_generated_proctor(request, token):
+    print("token", token)
+    try:
+        user = ProctorModel.objects.get(proctor_email=request.session['email'])
+        print("user", user)
+        try:
+            cursor = connection.cursor()
+            cursor.execute(
+                'SELECT * FROM complaints;')
+            complaints = cursor.fetchall()
+            cursor.close()
+            template_path = 'pdf_generated_proctor.html'
+            #context = {'user': user, 'complaint': complaints}
+            context = {'user': user, 'complaint': complaints[0]}
+
+            response = HttpResponse(content_type='application/pdf')
+            response['Content-Disposition'] = 'filename="complaint.pdf"'
+            template = get_template(template_path)
+            html = template.render(context)
+            pisa_status = pisa.CreatePDF(html, dest=response)
+            if pisa_status.err:
+                return HttpResponse('We had some errors <pre>' + html + '</pre>')
+            return response
+        except:
+            messages.error(request, 'You have no pdf to show.')
+            return redirect('/')
+    except:
+        messages.error(request, 'You need to login first')
+        return redirect('login_proctor')
     
